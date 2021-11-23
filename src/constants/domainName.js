@@ -1,1 +1,1 @@
-export const domainName = "http://localhost:3000/"
+export const domainName = "https://meetsy-app.herokuapp.com/"
