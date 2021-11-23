@@ -76,9 +76,6 @@ class EventItem extends Component {
                         let sd = query.data().startDate.toDate();
                         let ed = query.data().endDate.toDate();
 
-                        console.log(this.dateToString(sd));
-
-
                         if (this.condition(user.data().userId)) {
                             owner = owner + " (Me)";
                         }
@@ -158,7 +155,6 @@ class EventItem extends Component {
             hours = new Date(this.state.startDate).getHours();
             minutes = new Date(this.state.startDate).getMinutes();
             date = new Date(year, month, day, hours, minutes).toLocaleString('en-RO', this.options);
-            console.log(date);
             this.setState({ newStartDate: date, stringStartDate: event.target.value, newSDset: true });
         }
         else if (field === 'endDate') {
@@ -181,9 +177,6 @@ class EventItem extends Component {
             sd.setMinutes(minute);
 
             this.setState({ newStartDate: sd.toLocaleString('en-RO', this.options), stringStartTime: event.target.value });
-
-            console.log(sd);
-
         }
         else if (field === 'endTime') {
             const { newEndDate } = this.state;
@@ -206,7 +199,6 @@ class EventItem extends Component {
     };
 
     onSaveExit = () => {
-        console.log(new Date(this.state.startDate));
         this.props.firebase.event(this.eventId).update({
             title: this.state.newTitle,
             description: this.state.newDescription,

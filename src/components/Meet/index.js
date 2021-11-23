@@ -285,8 +285,6 @@ class Meet extends Component {
 
 	connectToSocketServer = () => {
 		socket = io(server_url, { secure: true, reconnection: true, rejectUnauthorized: false, transports: ['websocket'] });
-		console.log("heeeeere");
-		console.log(socket.connected);
 		socket.on("connect_error", (err) => {
 			console.log(`connect_error due to ${err.message}`);
 		});
@@ -295,8 +293,6 @@ class Meet extends Component {
 
 
 		socket.on('connect', () => {
-			console.log('S-a realizat conexiunea!')
-			console.log("Id: ", this.state.userId);
 			socket.emit('join-call', window.location.href, this.state.userId)
 			socketId = socket.id
 
@@ -304,13 +300,10 @@ class Meet extends Component {
 				window.location.href = ROUTES.CALLERROR;
 			})
 			socket.on('chat-message', (data, sender, socketIdSender) => {
-				console.log("socket.on(message)")
 				this.addMessage(data, sender, socketIdSender)
 			})
 
 			socket.on('image', (data, sender, socketIdSender) => {
-				console.log("socket.on(image)")
-                console.log(data)
 				this.addImage(data, sender, socketIdSender)
 			})
 
@@ -427,7 +420,6 @@ class Meet extends Component {
 	handleMessage = (e) => this.setState({ message: e.target.value })
 
 	addMessage = (data, sender, socketIdSender) => {
-		console.log("addMessage")
 		this.setState(prevState => ({
 			messages: [...prevState.messages, { "sender": sender, "data": data, "type": "txt" }],
 		}))
@@ -443,14 +435,12 @@ class Meet extends Component {
             .child(image)
             .getDownloadURL()
             .then(url => {
-                console.log("url "+ url)
                 this.setState(prevState => ({
                     messages: [...prevState.messages, { 'sender': sender, "data": url, "type": "image" }],
                 }))
                 if (socketIdSender !== socketId) {
                     this.setState({ newmessages: this.state.newmessages + 1 })
                 }
-                console.log(this.state.images)
             })
 	}
 
@@ -534,15 +524,8 @@ class Meet extends Component {
 	}
 
 	sendImages = () => {
-		console.log(this.state.previewImages)
-		console.log(this.state.previewImages.length)
-		console.log(this.state.previewImages.length > 0)
 		if (this.state.previewImages.length > 0) {
-			console.log("sendImages")
 			this.state.previewImages.forEach((image) => {
-                console.log("inamge.fileInfo " + image.name);
-                console.log(window.location.href);
-                console.log(window.location.href.substring(27));
 				socket.emit('image', image.name, this.state.username);
                 var folder = window.location.href.substring(27);
                 var uploadTask = this.storage.ref(folder + '/'+ image.name).put(image);

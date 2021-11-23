@@ -26,7 +26,6 @@ const StyledModal = styled.div`
 
 const Modal = ({ handleClose, show, children }) => {
     const showHideClassName = show ? {display: "block"} : {display: "none"};
-    console.log(children, show);
     return (
       <StyledModal style = {showHideClassName}>
         <ModalMain>

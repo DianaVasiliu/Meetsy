@@ -82,13 +82,11 @@ class TeamComponent extends Component {
     this.unsubscribe = this.props.firebase.users()
       .onSnapshot(snapshot => {
         let members = [];
-        console.log("here in TeamComponent.js!");
         snapshot.forEach(doc => {
           if (this.state.team.members.includes(doc.id))
             members.push({ ...doc.data(), uid: doc.id })
         }
         );
-        console.log("Membrii: ", members);
         this.setState({
           members: members,
           loading: false
@@ -103,14 +101,12 @@ class TeamComponent extends Component {
 
   onListenForMeetings = () => {
     this.setState({ loading: true });
-    console.log("Listen for Meetings");
 
     this.unsubscribe = this.props.firebase.meetings()
       .onSnapshot(snapshot => {
         let meetings = [];
 
         snapshot.forEach(doc => {
-          console.log(doc.data());
           if (doc.data().teamId === this.state.team.uid) {
             meetings.push({ ...doc.data(), uid: doc.id })
           }
@@ -134,7 +130,6 @@ class TeamComponent extends Component {
     const { members } = this.state;
     var currentMember = members.find(u => u.userId === memberId);
     var oldTeams = currentMember.teams;
-    console.log(oldTeams);
     this.props.firebase.team(team.uid).update({
       members: members.map(u => u.userId).filter(id => id !== memberId)
     });
@@ -158,7 +153,6 @@ class TeamComponent extends Component {
       query.forEach(doc => {
         if (doc.exists) {
           const user = doc.data();
-          console.log(user, typeof (user));
           var newMembers = members.map(u => u.userId);
           newMembers.push(user.userId)
           this.props.firebase.team(team.uid).update({
@@ -185,7 +179,6 @@ class TeamComponent extends Component {
   }
 
   onEditTeam = (team, text) => {
-    console.log("Echipa este:", team);
     this.props.firebase.team(team.uid).update({
       name: text
     });
@@ -256,9 +249,7 @@ class TeamComponent extends Component {
   }
 
   onAddMeeting = event => {
-    console.log("Adauga!");
     event.preventDefault();
-    console.log(this.state);
     const { startDate, startTime, duration, title, description } = this.state;
 
     this.setState({

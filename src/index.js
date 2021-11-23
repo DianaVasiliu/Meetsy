@@ -9,8 +9,6 @@ import SingletonFactory from './components/Firebase';
 
 
 var firebase = SingletonFactory.getInstance();
-var firebase2 = SingletonFactory.getInstance();
-console.log(firebase === firebase2);
 
 ReactDOM.render(
   <FirebaseContext.Provider value={firebase}>

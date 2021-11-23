@@ -10,7 +10,6 @@ import Modal from '../Modal';
 class TeamCollection extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     // state reprezinta un obiect care mentine informatie care e posibil sa se schimbe
     // pe parcursul vietii componentei si este de obiecei schimbata de event handlers
 
@@ -40,7 +39,6 @@ class TeamCollection extends Component {
       .teams()
       .onSnapshot(snapshot => {
         let teams = [];
-        console.log("here!");
         snapshot.forEach(doc =>
           teams.push({ ...doc.data(), uid: doc.id }),
         );
@@ -125,7 +123,6 @@ class TeamCollection extends Component {
         evs.push({ ...doc.data(), uid: doc.id })
       }
       );
-      console.log("Membrii: ", new Date(evs[0].startDate * 1000));
     })
 
     return (

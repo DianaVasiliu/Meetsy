@@ -36,15 +36,10 @@ class Home extends Component {
       .onSnapshot(snapshot => {
 
         let myTeams = [];
-        console.log("GETTING TEAMS");
 
         snapshot.forEach(doc => {
-          console.log(doc.data());
-          console.log(this.props.firebase.authUser.teams);
           myTeams = this.props.firebase.authUser.teams;
         });
-
-        console.log("echipe:", myTeams);
 
         this.setState({
           myTeams: myTeams,

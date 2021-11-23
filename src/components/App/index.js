@@ -47,9 +47,7 @@ class App extends Component {
   componentDidMount() {
     this.props.firebase.auth.onAuthStateChanged(authUser => {
       this.setState({ loading: true })
-      console.log("Out here!", this.state.loading);
       if (authUser) {
-        console.log("In here!");
         this.props.firebase.user(authUser.uid)
           .get()
           .then(snapshot => {
@@ -59,7 +57,6 @@ class App extends Component {
               dbUser.roles = {};
             }
             // merge auth and db user
-            console.log(dbUser);
             this.props.firebase.authUser = {
               uid: authUser.uid,
               email: authUser.email,
@@ -67,12 +64,9 @@ class App extends Component {
               providerData: authUser.providerData,
               ...dbUser,
             };
-            console.log("Loading-ul este: ", this.state.loading)
-            console.log(this.props.firebase.authUser);
             this.setState({ loading: false })
           });
       } else {
-        console.log("Loading-ul este pe callback: ", this.state.loading)
         this.setState({ loading: false })
       }
     });

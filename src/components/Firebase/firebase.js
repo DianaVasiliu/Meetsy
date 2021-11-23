@@ -59,7 +59,7 @@ var SingletonFactory = (function () {
       this.user(this.auth.currentUser.uid).get().then(query => {
         return query.data();
       }).catch((error) => {
-        console.log("No such user!");
+        console.log("Error getting user");
       });
       return null;
     }
