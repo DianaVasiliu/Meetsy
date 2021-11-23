@@ -32,6 +32,11 @@ class AccountPage extends Component {
     }
 
     const uploadTask = this.props.firebase.storage.ref(`images/${this.state.selectedFile.name}`).put(this.state.selectedFile);
+    this.setState({
+      errorMsg: null,
+      successMsg: null,
+      loadingMsg: "Loading image... Please wait"
+    })
 
     uploadTask.on(
       "state_changed",
@@ -53,6 +58,7 @@ class AccountPage extends Component {
             this.setState({
               fileUrl: url,
               errorMsg: null,
+              loadingMsg: null,
               successMsg: "Image uploaded successfully."
             });
 
@@ -80,16 +86,23 @@ class AccountPage extends Component {
       {authUser => (
         <div>
           <h1>Account: {this.props.firebase.authUser.username}</h1>
+          <h3>Forgot password?</h3>
           <PasswordForgetForm />
+          <br />
           
-          {/* <PasswordForgetForm /> */}
+          <h3>Change password</h3>
           <PasswordChangeForm />
+          <br />
+          
+          <h3>Edit profile picture</h3>
           <input type="file" onChange={this.onFileChange} />
+          <br />
           <StyledButton onClick={this.onUploadFile}>Upload Profile Image</StyledButton>
-          <StyledButton onClick={this.onRemoveProfilePicture}>Remove Profile Picture</StyledButton>
+          <StyledButton onClick={this.onRemoveProfilePicture} marginLeft="15px">Remove Profile Picture</StyledButton>
           <br></br>
           <progress value={this.state.progress} max="100" />
 
+          {this.state.loadingMsg !== null && <p style={{ color: COLORS.primaryBlue }}>{this.state.loadingMsg}</p>}
           {this.state.successMsg !== null && <p style={{ color: COLORS.success }}>{this.state.successMsg}</p>}
           {this.state.errorMsg !== null && <p style={{ color: COLORS.error }}>{this.state.errorMsg}</p>}
         </div>

@@ -72,6 +72,7 @@ class PasswordChangeForm extends Component {
           placeholder="Old Password"
           style={inputStyle}
         />
+        <br/>
         <StyledInput
           name="passwordOne"
           value={passwordOne}
@@ -79,7 +80,8 @@ class PasswordChangeForm extends Component {
           type="password"
           placeholder="New Password"
           style={inputStyle}
-        />
+        />        
+        <br/>
         <StyledInput
           name="passwordTwo"
           value={passwordTwo}
@@ -88,12 +90,14 @@ class PasswordChangeForm extends Component {
           placeholder="Confirm New Password"
           style={inputStyle}
         />
+        <br/>
         <StyledButton disabled={isInvalid} type="submit"
           className={
             isInvalid
               ? css(resetBtn.disabledBtn)
               : css(resetBtn.enabledBtn)
-          }>
+          }
+          >
           Reset My Password
         </StyledButton>
 
